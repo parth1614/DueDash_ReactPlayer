@@ -3,10 +3,31 @@ import "./lesson.css"
 import ResponsivePlayer from "../video/ResponsivePlayer"
 
 const Lesson = () => {
-  const [watchComplete, setWatchComplete] = useState(false)
+  const [
+    watchComplete,
+    setWatchComplete,
+    setpauseComplete,
+    setEndedComplete
+  ] = useState(false)
 
-  const handleWatchComplete = ({ played }) => {
-    console.log(played)
+  const handleWatchComplete = state => {
+    if (state.played >= 0.7 && !watchComplete) {
+      setWatchComplete(true)
+      console.log(state)
+    }
+  }
+  const handleWatchPause = state => {
+    if (!watchComplete) {
+      setpauseComplete(true)
+      console.log(state)
+    }
+  }
+
+  const handleWatchEnded = state => {
+    if (!watchComplete) {
+      setEndedComplete(true)
+      console.log(state)
+    }
   }
 
   return (
@@ -14,6 +35,8 @@ const Lesson = () => {
       <ResponsivePlayer
         url="https://www.youtube.com/watch?v=ovJcsL7vyrk"
         onProgress={handleWatchComplete}
+        onPause={handleWatchPause}
+        onEnded={handleWatchEnded}
       />
       <div
         className={
